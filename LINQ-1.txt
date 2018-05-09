@@ -1,14 +1,14 @@
 A- production operators
 
-1- select
+	1- select
 
 var x = table.select (c=> new{c.id , c.name}).tolist();
 
-2-select + where
+	2-select + where
 
 var x = table.where(c=> c.name == "salah").select(c.id);
 
-3-selectMany
+	3-selectMany
 
 IEnumerable <class> x = table.where(o=>o.id =="2").selectMany(o.name);
 
@@ -17,12 +17,69 @@ IEnumerable <class> x = table.where(o=>o.id =="2").selectMany(o.name);
 
 B-Ordering Operators
 
-1-orderBy
+	1-orderBy
 
 var x = table.where(c=>c.name=="salah").orderByDescending(c.place).select(o=> new{o.name ,o.id});
 
-2-thenBy
+	2-thenBy
 
 // order two column name - city
+
 var x = table.where(c=>c.name=="salah").orderByDescending(c.place).thenBy(c=>c.city).select(o=> new{o.name ,o.id});
+
+#########################################################################
+
+C- Join operators
+
+	1- join 
+var x= table.selectmany(c=>C.id).join(second table ,column from first table o=>o.id ,column from second table p =>p.id, (o,p)=>new{o.name, o.date ,p.place ,p.month}); 
+
+
+var x = from o in table1 
+	join p in table2
+	on o.id equals p.id 
+	select new {o.month , o.year , p.price , p.name};
+
+#########################################################################
+D- Set Operators
+
+	1-Distinct  
+
+var x = (from c in table 1
+	join p in table2
+	on c.id equals p.id 
+	select p.distinct)();
+
+	2- Unoin
+// not repet the same column as join 
+   
+var x = (from c in table1 
+	where c.name = "salah" 
+	select c ).Union(from c in table2 
+	where c.name =="mo" 
+	select c);
+
+// intersection between tables
+	3- intersect
+
+var x = (from c in table1 
+	where c.name = "salah" 
+	select c ).intersect(from c in table2 
+	where c.name =="mo" 
+	select c);
+
+	4- Except
+
+var x = (from c in table1 
+	where c.name = "salah" 
+	select c Except(from c in table2 
+	where c.name =="mo" 
+	select c);
+
+#########################################################################
+
+ 
+
+
+
 
