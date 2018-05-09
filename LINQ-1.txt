@@ -1,0 +1,31 @@
+
+
+
+A- production operators
+
+1- select
+
+var x = table.select (c=> new{c.id , c.name}).tolist();
+
+2-select + where
+
+var x = table.where(c=> c.name == "salah").select(c.id);
+
+3-selectMany
+
+IEnumerable <class> x = table.where(o=>o.id =="2").selectMany(o.name);
+
+
+#########################################################################
+
+B-Ordering Operators
+
+1-orderBy
+
+var x = table.where(c=>c.name=="salah").orderByDescending(c.place).select(o=> new{o.name ,o.id});
+
+2-thenBy
+
+// order two column name - city
+var x = table.where(c=>c.name=="salah").orderByDescending(c.place).thenBy(c=>c.city).select(o=> new{o.name ,o.id});
+
